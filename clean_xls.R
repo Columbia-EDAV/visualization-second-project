@@ -2,20 +2,23 @@
 library(readxl) # for 'read_excel'
 library(gdata) # for 'grep'
 library(splitstackshape) # for 'cSplit()'
+library(xlsx)
 
 # Read xlsx file
 raw.data <- read_excel("data/GlobalFloodsRecord.xls", sheet="MasterTable")
 
-# Remove records with almost no data, Remove columns (repetitive, NAs, notes )
+# Remove columns (repetitive, NAs, notes )
 dataFlood<- raw.data[-c(6, 7, 27, 30, 31)]
-colnames(dataFlood)<-c('Register Num', 'Annual DFO Num',	'Glide Num',	'Country',	'Other',
-                       'Detailed Locations', 'Validation',	'Began',	'Ended',	'Duration in Days',
-                       'Dead',	'Displaced',	'Damage (USD)',	'Main cause',	'Severity', 'Affected (sq km)',
-                       'Magnitude (M)',	'Centroid X',	'Centroid Y',	'News if validated',	'M>6',
-                       'Total annual floods M>6',	'M>4',	'Total annual floods M>4',	
-                       'Total floods M>6',	'Total floods M>4');
+colnames(dataFlood) <- c('Register Num', 'Annual DFO Num',	'Glide Num',	'Country',	'Other', 
+                         'Detailed Locations', 'Validation',	'Began',
+                         'Ended',	'Duration in Days', 'Dead',	'Displaced',	'Damage (USD)',
+                         'Main cause',	'Severity', 'Affected (sq km)', 'Magnitude (M)', 'Centroid X',
+                         'Centroid Y',	'News if validated',	'M>6', 'Total annual floods M>6',	'M>4',
+                         'Total annual floods M>4', 'Total floods M>6',	'Total floods M>4')
 
+# Remove records with almost no data
 dataFlood <- dataFlood[!is.na(dataFlood$Country),]
+
 to_replace <- grepl("error", dataFlood$Country, perl=TRUE)
 dataFlood <- dataFlood[!to_replace,]
 
@@ -27,6 +30,16 @@ dataFlood$`Glide Num`[to_replace] <- "NA"
 
 to_replace <- grepl("0", dataFlood$Validation, perl=TRUE)
 dataFlood$Validation[to_replace] <- "NA"
+
+# Convert Began and Ended into Date type
+# http://stackoverflow.com/questions/15686451/dates-from-excel-to-r-platform-dependency
+# Need to double check depend on the OS you're using.
+# If the first row Began is 2015-12-05, it is right.
+dataFlood$Began <- as.Date(dataFlood$Began, origin = "1899-12-30")
+dataFlood$Ended <- as.Date(dataFlood$Ended, origin = "1899-12-30")
+dataFlood$Began <- format(dataFlood$Began, "%d-%b-%y")
+dataFlood$Ended <- format(dataFlood$Ended, "%d-%b-%y")
+
 
 # Clean up Country Column
 dataFlood$Country <- trim(dataFlood$Country)
