@@ -192,6 +192,6 @@ to_replace <- grepl("Tropical Cycl", df1$`Main cause_2`, perl=TRUE)
 df1$`Main cause_2`[to_replace] <- "Tropical Cyclone"
 
 # Produce the cleaned data file
-write.csv(df1, file= "data/clean_data.csv")
+write.csv(df1, file= "data/clean_data.csv", row.names=FALSE)
 
 #```
