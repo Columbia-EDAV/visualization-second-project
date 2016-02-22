@@ -4,7 +4,7 @@ library(gdata) # for 'grep'
 library(splitstackshape) # for 'cSplit()'
 
 # Read xlsx file
-raw.data <- read_excel("data/GlobalFloodsRecord.xlsx", sheet="MasterTable")
+raw.data <- read_excel("data/GlobalFloodsRecord.xls", sheet="MasterTable")
 
 # Remove records with almost no data, Remove columns (repetitive, NAs, notes )
 dataFlood<- raw.data[-c(6, 7, 27, 30, 31)]
