@@ -179,10 +179,6 @@ to_replace <- grepl("Heavy monso", df1$`Main cause_2`, perl=TRUE)
 df1$`Main cause_2`[to_replace] <- "Monsoonal Rain"
 to_replace <- grepl("early monsoonal Rain", df1$`Main cause_2`, perl=TRUE)
 df1$`Main cause_2`[to_replace] <- "Monsoonal Rain"
-to_replace <- grepl("Heavy monso", df1$`Main cause_2`, perl=TRUE)
-df1$`Main cause_2`[to_replace] <- "Monsoonal Rain"
-to_replace <- grepl("Heavy monso", df1$`Main cause_2`, perl=TRUE)
-df1$`Main cause_2`[to_replace] <- "Monsoonal Rain"
 
 to_replace <- grepl("Hea+", df1$`Main cause_2`, perl=TRUE)
 df1$`Main cause_2`[to_replace] <- "Heavy Rain"
