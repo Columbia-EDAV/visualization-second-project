@@ -16,6 +16,8 @@ colnames(dataFlood)<-c('Register Num', 'Annual DFO Num',	'Glide Num',	'Country',
                        'Total floods M>6',	'Total floods M>4');
 
 dataFlood <- dataFlood[!is.na(dataFlood$Country),]
+to_replace <- grepl("error", dataFlood$Country, perl=TRUE)
+dataFlood <- dataFlood[!to_replace,]
 
 to_replace <- grepl("0", dataFlood$Other, perl=TRUE)
 dataFlood$Other[to_replace] <- "NA"
