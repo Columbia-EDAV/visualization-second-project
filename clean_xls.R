@@ -207,4 +207,16 @@ df1$`Main cause_2`[to_replace] <- "Tropical Cyclone"
 # Produce the cleaned data file
 write.csv(df1, file= "data/clean_data.csv", row.names=FALSE)
 
+
+# Use 'data' for your code.
+data <- read.csv("data/clean_data.csv")
+new_cname <- c('Register Num', 'Annual DFO Num',	'Glide Num',	'Country',	'Other', 
+               'Detailed Locations', 'Validation',	'Began', 'Ended',	'Duration in Days',
+               'Dead',	'Displaced',	'Damage (USD)', 'Severity', 'Affected (sq km)', 
+               'Magnitude (M)', 'Centroid X', 'Centroid Y',	'News if validated',	'M>6',
+               'Total annual floods M>6',	'M>4', 'Total annual floods M>4', 'Total floods M>6',	'Total floods M>4', 
+               'Main Cause 1', 'Main Cause 2', 'Main Cause 3')
+colnames(data) <- new_cname 
+
+
 #```
